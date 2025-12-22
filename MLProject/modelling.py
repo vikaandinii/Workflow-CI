@@ -7,7 +7,7 @@ import mlflow.sklearn
 
 data_path = "hotelbookings_preprocessing/hotelbookings_preprocessing_automate.csv"
 
-df = pd.read_csv(data_path, nrows=1000)
+df = pd.read_csv(data_path)
 
 X = df.drop(columns=["is_canceled"])
 y = df["is_canceled"]
