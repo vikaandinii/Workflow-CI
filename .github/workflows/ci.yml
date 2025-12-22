@@ -14,9 +14,11 @@ jobs:
 
       - name: Set up Git LFS
         run: |
+          sudo apt-get update
           sudo apt-get install git-lfs -y
           git lfs install
-          git lfs pull
+          git lfs pull --all
+      
 
       - name: Set up Python
         uses: actions/setup-python@v4
