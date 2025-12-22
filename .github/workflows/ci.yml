@@ -23,10 +23,15 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install mlflow pandas scikit-learn
-          conda env create -f MLProject/conda.yaml || echo "Conda environment already exists"
+          pip install mlflow pandas scikit-learn matplotlib seaborn joblib
 
-      # 4. Jalankan MLflow Project (train model)
+      # 4. Jalankan MLflow Project tanpa membuat environment baru
       - name: Run MLflow Project
-        run: mlflow run MLProject
-        
+        run: mlflow run MLProject --no-conda
+
+      # 5. Upload model artifacts (optional)
+      - name: Upload model artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: hotel-cancellation-model
+          path: MLProject/mlruns/
