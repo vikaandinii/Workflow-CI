@@ -27,7 +27,8 @@ jobs:
 
       # 4. Jalankan MLflow Project tanpa membuat environment baru
       - name: Run MLflow Project
-        run: mlflow run MLProject --no-conda
+        run: mlflow run MLProject --env-manager local
+
 
       # 5. Upload model artifacts (optional)
       - name: Upload model artifacts
