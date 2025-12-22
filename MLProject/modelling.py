@@ -4,22 +4,22 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 import mlflow
 import mlflow.sklearn
+import os
 
 data_path = "hotelbookings_preprocessing/hotelbookings_preprocessing_automate.csv"
 
-# Baca CSV dan bersihkan nama kolom
-df = pd.read_csv(data_path)
-df.columns = df.columns.str.strip() 
+if not os.path.exists(data_path):
+    raise FileNotFoundError(f"Dataset tidak ditemukan: {data_path}")
 
-# Pastikan kolom is_canceled ada
+df = pd.read_csv(data_path)
+df.columns = df.columns.str.strip()
+
 if "is_canceled" not in df.columns:
     raise ValueError("Kolom 'is_canceled' tidak ditemukan di dataset. Cek header CSV!")
 
-# Pisahkan fitur dan target
 X = df.drop(columns=["is_canceled"])
 y = df["is_canceled"]
 
-# Split data
 X_train, X_test, y_train, y_test = train_test_split(
     X,
     y,
@@ -28,22 +28,19 @@ X_train, X_test, y_train, y_test = train_test_split(
     stratify=y
 )
 
-# Buat model
 model = RandomForestClassifier(
     random_state=42,
     n_estimators=100
 )
 
-# MLflow setup
-mlflow.set_tracking_uri("file:mlruns")  # <- penting
+mlflow.set_tracking_uri("file:mlruns")
 mlflow.set_experiment("Hotel_Cancellation_Model_Basic")
 mlflow.sklearn.autolog()
 
-# Training
-with mlflow.start_run(): 
+with mlflow.start_run():
     model.fit(X_train, y_train)
     y_pred = model.predict(X_test)
     acc = accuracy_score(y_test, y_pred)
     print(f"Model accuracy: {acc:.4f}")
 
-print("Training selesai. Jalankan: mlflow ui")
+print("Training selesai. Folder MLflow runs ada di 'MLProject/mlruns'.")
