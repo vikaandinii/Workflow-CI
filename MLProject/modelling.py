@@ -9,7 +9,7 @@ data_path = "hotelbookings_preprocessing/hotelbookings_preprocessing_automate.cs
 
 # Baca CSV dan bersihkan nama kolom
 df = pd.read_csv(data_path)
-df.columns = df.columns.str.strip()  # hapus spasi di awal/akhir header
+df.columns = df.columns.str.strip() 
 
 # Pastikan kolom is_canceled ada
 if "is_canceled" not in df.columns:
@@ -35,11 +35,12 @@ model = RandomForestClassifier(
 )
 
 # MLflow setup
+mlflow.set_tracking_uri("file:mlruns")  # <- penting
 mlflow.set_experiment("Hotel_Cancellation_Model_Basic")
 mlflow.sklearn.autolog()
 
 # Training
-with mlflow.start_run():
+with mlflow.start_run(): 
     model.fit(X_train, y_train)
     y_pred = model.predict(X_test)
     acc = accuracy_score(y_test, y_pred)
