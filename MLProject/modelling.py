@@ -1,0 +1,38 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+
+data_path = r"C:\Workflow-CI\MLProject\hotelbookings_preprocessing\hotelbookings_preprocessing_automate.csv"
+df = pd.read_csv(data_path)
+
+X = df.drop(columns=["is_canceled"])
+y = df["is_canceled"]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.3,
+    random_state=42,
+    stratify=y
+)
+
+model = RandomForestClassifier(
+    random_state=42,
+    n_estimators=100
+)
+
+mlflow.set_experiment("Hotel_Cancellation_Model_Basic")
+mlflow.sklearn.autolog()
+
+with mlflow.start_run():
+    model.fit(X_train, y_train)
+
+    y_pred = model.predict(X_test)
+    acc = accuracy_score(y_test, y_pred)
+
+    print(f"Model accuracy: {acc:.4f}")
+
+print("Training selesai. Jalankan: mlflow ui")

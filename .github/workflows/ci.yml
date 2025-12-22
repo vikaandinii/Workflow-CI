@@ -1,0 +1,29 @@
+name: MLflow CI
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  train-model:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install mlflow pandas scikit-learn
+          conda env create -f MLProject/conda.yaml || echo "Conda environment already exists"
+
+      - name: Run MLflow Project
+        run: mlflow run MLProject
+  
