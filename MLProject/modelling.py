@@ -6,7 +6,8 @@ import mlflow
 import mlflow.sklearn
 import os
 
-data_path = "hotelbookings_preprocessing/hotelbookings_preprocessing_automate.csv"
+data_path = data_path = "MLProject/hotelbookings_preprocessing/hotelbookings_preprocessing_automate.csv"
+
 
 if not os.path.exists(data_path):
     raise FileNotFoundError(f"Dataset tidak ditemukan: {data_path}")
