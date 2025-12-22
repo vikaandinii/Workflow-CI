@@ -29,3 +29,10 @@ jobs:
       # 4. Jalankan MLflow Project (train model)
       - name: Run MLflow Project
         run: mlflow run MLProject
+        
+      # 5. Upload artefak model ke GitHub 
+      - name: Upload model artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: hotel-cancellation-model
+          path: MLProject/mlruns/
