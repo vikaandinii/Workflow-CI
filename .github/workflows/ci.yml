@@ -32,7 +32,8 @@ jobs:
         
       # 5. Upload artefak model ke GitHub 
       - name: Upload model artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: hotel-cancellation-model
           path: MLProject/mlruns/
+
