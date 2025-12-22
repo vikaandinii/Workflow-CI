@@ -9,35 +9,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Setup Git LFS agar file CSV besar bisa di-download
       - name: Set up Git LFS
         run: |
-          sudo apt-get install git-lfs
+          sudo apt-get install git-lfs -y
           git lfs install
           git lfs pull
 
-      # 3. Setup Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.13'
 
-      # 4. Install dependencies
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install mlflow pandas scikit-learn matplotlib seaborn joblib
 
-      # 5. Jalankan MLflow Project tanpa membuat environment baru
       - name: Run training script
         run: python MLProject/modelling.py
 
-
-      # 6. Upload model artifacts 
       - name: Upload model artifacts
         uses: actions/upload-artifact@v4
         with:
