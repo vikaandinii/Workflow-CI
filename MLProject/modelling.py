@@ -5,7 +5,8 @@ from sklearn.metrics import accuracy_score
 import mlflow
 import mlflow.sklearn
 
-data_path = "Workflow-CI\MLProject\hotelbookings_preprocessing\hotelbookings_preprocessing_automate.csv"
+data_path = "hotelbookings_preprocessing/hotelbookings_preprocessing_automate.csv"
+
 df = pd.read_csv(data_path)
 
 X = df.drop(columns=["is_canceled"])
