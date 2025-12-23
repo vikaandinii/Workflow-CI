@@ -24,8 +24,9 @@ mlflow.set_tracking_uri("sqlite:///mlflow.db")
 mlflow.set_experiment("Hotel_Cancellation_Model_Basic")
 mlflow.sklearn.autolog()
 
-with mlflow.start_run(nested=True):
+with mlflow.start_run():
     model.fit(X_train, y_train)
     y_pred = model.predict(X_test)
     acc = accuracy_score(y_test, y_pred)
     print(f"Model accuracy: {acc:.4f}")
+
