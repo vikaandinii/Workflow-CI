@@ -32,6 +32,11 @@ jobs:
       - name: Run training script
         run: python MLProject/modelling.py
 
+      - name: List MLflow runs
+        run: |
+          echo "Cek isi folder MLProject/mlruns:"
+          ls -R MLProject/mlruns
+
       - name: Upload model artifacts
         uses: actions/upload-artifact@v4
         with:
