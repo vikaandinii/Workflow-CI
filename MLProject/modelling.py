@@ -7,7 +7,7 @@ import mlflow.sklearn
 import os
 
 # Path dataset
-data_path = "MLProject/hotelbookings_preprocessing/hotelbookings_preprocessing_automate.csv"
+data_path = os.path.join(os.path.dirname(__file__), "hotelbookings_preprocessing/hotelbookings_preprocessing_automate.csv")
 
 # Cek apakah dataset ada
 if not os.path.exists(data_path):
