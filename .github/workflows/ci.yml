@@ -18,6 +18,7 @@ jobs:
         run: |
           git lfs install
           git lfs pull
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -27,13 +28,21 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install mlflow pandas scikit-learn matplotlib seaborn joblib
+
       - name: Run training script
-        run: mlflow run MLProject --env-manager local -e main -P data_path=hotelbookings_preprocessing/hotelbookings_preprocessing_automate.csv
+        run: |
+          mkdir -p mlruns
+          mlflow run MLProject \
+            --env-manager local \
+            -e main \
+            -P data_path=hotelbookings_preprocessing/hotelbookings_preprocessing_automate.csv \
+            --backend-config backend.conf
 
       - name: List MLflow runs
         run: |
           echo "Cek isi folder mlruns:"
           ls -R mlruns
+
       - name: Upload model artifacts
         uses: actions/upload-artifact@v4
         with:
