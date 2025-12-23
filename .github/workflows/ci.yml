@@ -28,7 +28,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install mlflow pandas scikit-learn matplotlib seaborn joblib
       - name: Run training script
-        run: python MLProject/modelling.py
+        run: mlflow run MLProject --env-manager local
 
       - name: List MLflow runs
         run: |
