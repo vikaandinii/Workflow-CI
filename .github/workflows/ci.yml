@@ -30,13 +30,7 @@ jobs:
           pip install mlflow pandas scikit-learn matplotlib seaborn joblib
 
       - name: Run training script
-        run: |
-          mkdir -p mlruns
-          mlflow run MLProject \
-            --env-manager local \
-            -e main \
-            -P data_path=hotelbookings_preprocessing/hotelbookings_preprocessing_automate.csv \
-            --backend-config backend.conf
+        run: mlflow run MLProject --env-manager local
 
       - name: List MLflow runs
         run: |
