@@ -3,6 +3,7 @@ conda_env: conda.yaml
 
 entry_points:
   main:
+    command: "python modelling.py --data_path hotelbookings_preprocessing/hotelbookings_preprocessing_automate.csv"
     parameters:
       data_path: {type: str, default: "hotelbookings_preprocessing/hotelbookings_preprocessing_automate.csv"}
-    command: "python modelling.py --data_path {data_path}"
+
