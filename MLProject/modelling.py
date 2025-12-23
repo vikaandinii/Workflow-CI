@@ -19,15 +19,14 @@ y = df["is_canceled"]
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42, stratify=y)
 model = RandomForestClassifier(random_state=42, n_estimators=100)
 
-mlflow.set_tracking_uri("file:mlruns")
+mlflow.set_tracking_uri("sqlite:///mlflow.db")
 mlflow.set_experiment("Hotel_Cancellation_Model_Basic")
-mlflow.sklearn.autolog()
 
-with mlflow.start_run(nested=False):  
+with mlflow.start_run(run_name="CI_Run", nested=False):
+    mlflow.sklearn.autolog()
     model.fit(X_train, y_train)
     y_pred = model.predict(X_test)
     acc = accuracy_score(y_test, y_pred)
     print(f"Model accuracy: {acc:.4f}")
 
-mlruns_path = os.path.abspath("mlruns")
-print(f"Training selesai. Artefak MLflow disimpan di: {mlruns_path}")
+print(f"Training selesai. Artefak MLflow disimpan di folder: mlruns/ atau database mlflow.db")
