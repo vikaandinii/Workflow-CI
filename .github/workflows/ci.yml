@@ -2,7 +2,7 @@ name: MLflow CI
 
 on:
   push:
-    branches: [master]
+    branches: [main]
 
 jobs:
   train-model:
@@ -12,7 +12,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          lfs: true  
+          lfs: true
 
       - name: Set up Git LFS
         run: |
@@ -22,7 +22,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.13'
+          python-version: '3.12'
 
       - name: Install dependencies
         run: |
@@ -33,7 +33,8 @@ jobs:
         run: rm -rf mlruns mlflow.db
 
       - name: Run training script
-        run: mlflow run MLProject --env-manager local
+        run: |
+          mlflow run MLProject --env-manager local
 
       - name: List MLflow runs
         run: |
@@ -44,5 +45,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: hotel-cancellation-model
-          path: mlruns/
-
+          path: mlruns/*
