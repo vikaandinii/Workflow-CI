@@ -20,13 +20,14 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_
 model = RandomForestClassifier(random_state=42, n_estimators=100)
 
 mlflow.set_tracking_uri("sqlite:///mlflow.db")
-mlflow.set_experiment("Hotel_Cancellation_Model_Basic")
+experiment_name = "Hotel_Cancellation_Model_Basic"
+mlflow.set_experiment(experiment_name)
 
-with mlflow.start_run(run_name="CI_Run", nested=False):
+with mlflow.start_run(run_name=None, nested=False):
     mlflow.sklearn.autolog()
     model.fit(X_train, y_train)
     y_pred = model.predict(X_test)
     acc = accuracy_score(y_test, y_pred)
     print(f"Model accuracy: {acc:.4f}")
 
-print(f"Training selesai. Artefak MLflow disimpan di folder: mlruns/ atau database mlflow.db")
+print(f"Training selesai. Artefak MLflow disimpan di folder mlruns/ atau database mlflow.db")
