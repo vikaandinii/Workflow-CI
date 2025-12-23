@@ -2,7 +2,7 @@ name: MLflow CI
 
 on:
   push:
-    branches: [main]
+    branches: [master]
 
 jobs:
   train-model:
@@ -12,34 +12,30 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          lfs: true
+          lfs: true  
 
       - name: Set up Git LFS
         run: |
           git lfs install
           git lfs pull
-
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.12'
+          python-version: '3.13'
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install mlflow pandas scikit-learn matplotlib seaborn joblib
-
       - name: Run training script
-        run: |
-          mlflow run MLProject --env-manager local
+        run: python MLProject/modelling.py
 
       - name: List MLflow runs
         run: |
           echo "Cek isi folder mlruns:"
           ls -R mlruns
-
       - name: Upload model artifacts
         uses: actions/upload-artifact@v4
         with:
           name: hotel-cancellation-model
-          path: mlruns/*
+          path: mlruns/
