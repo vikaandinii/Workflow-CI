@@ -31,7 +31,7 @@ jobs:
 
 
       - name: Run training script
-        run: mlflow run MLProject --no-conda
+        run: mlflow run MLProject -–env-manager local
 
       - name: List MLflow runs
         run: |
